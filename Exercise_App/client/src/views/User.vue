@@ -58,6 +58,7 @@
         </div>
         <div class="buttons">
         <button class="button is-primary">Add</button>
+        <button class="button is-danger">Remove</button>
         </div>
      </div>
      <div class="column">
@@ -74,6 +75,7 @@
         </div>
         <div class="buttons">
         <button class="button is-primary">Add</button>
+        <button class="button is-danger">Remove</button>
         </div>
      </div>
      <div class="column">
@@ -90,6 +92,7 @@
         </div>
         <div class="buttons">
         <button class="button is-primary">Add</button>
+        <button class="button is-danger">Remove</button>
         </div>
      </div>
      <div class="column">
@@ -106,7 +109,9 @@
         </div>
         <div class="buttons">
         <button class="button is-primary">Add</button>
+        <button class="button is-danger">Remove</button>
         </div>
+        
      </div>
      
     <div class="column">
@@ -128,6 +133,7 @@
         </div>
         <div class="buttons">
         <button class="button is-primary ">Add</button>
+        <button class="button is-danger">Remove</button>
         </div>
         
     </div>
@@ -149,6 +155,7 @@
         </div>
         <br>
     <button class="button is-primary is-pulled-right">Submit to Feed</button>
+    <br>
 <hr>
 
 

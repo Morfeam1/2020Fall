@@ -8,6 +8,7 @@
       <center>
     <div class="columns">
      <div class="column is-half">
+       <hr>
         <p class="title is-2">Matt's Exercise App</p>
         <p class="subtitle is-4">
           Welcome to Matthew M's Exercise App. Everything
@@ -16,9 +17,16 @@
           working on these pages to improve functionality
           and presentation.
         </p>
+        <hr>
      </div>
      <div class="column is-half">
-       Second column
+          <hr>
+         <p class="subtitle is-4">Example of User Page</p>
+          <router-link to="/User" class="button is-primary">User</router-link>
+          <hr>
+         <p class="subtitle is-4">Example of Admin Page</p>
+          <router-link to="/Admin" class="button is-info">Admin</router-link>
+          <hr>
      </div>
     </div>
       </center>

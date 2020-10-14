@@ -43,7 +43,7 @@
 </div>
 <div class="field">
   <p class="control">
-    <button class="button is-primary">
+    <button class="button is-primary is-pulled-right">
       Signup
     </button>
   </p>
