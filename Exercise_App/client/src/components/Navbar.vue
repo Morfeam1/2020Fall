@@ -26,22 +26,21 @@
 
       <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link">
-          More
+          Exercises
         </a>
 
         <div class="navbar-dropdown">
           <a class="navbar-item">
-            About
+            Jogging / Walking
           </a>
           <a class="navbar-item">
-            Jobs
+            Hiking
           </a>
           <a class="navbar-item">
-            Contact
+            Weight Lifting
           </a>
-          <hr class="navbar-divider">
           <a class="navbar-item">
-            Report an issue
+            Other
           </a>
         </div>
       </div>
@@ -50,10 +49,8 @@
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="buttons">
-          <a class="button is-primary">
-            <strong>Sign up</strong>
-          </a>
-          <router-link to="/Login" class="button is-light">Login</router-link>
+          <router-link to="/Signup" class="button is-primary is-light">Signup</router-link>
+          <router-link to="/Login" class="button is-primary">Login</router-link>
 
         </div>
       </div>
