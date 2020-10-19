@@ -5,7 +5,10 @@
 const data = [{name: 'Moshe', age: 43},
 {name: 'Biden', age: 78}]
 
-function getAll(){
+ async function getAll(){
+    //await Promise.resolve()
+    throw { status: 501, message: "This is a fake error"}
+    console.log("Called Get All")
     return data;
 }
 function add(name,age){
