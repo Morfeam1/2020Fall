@@ -4,7 +4,8 @@
   "description": "Whatever",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon server/index.js"
+    "start": "nodemon server/index.js",
+    "dev": "nodemon --watch server server/index.js"
   },
   
   "author": "",

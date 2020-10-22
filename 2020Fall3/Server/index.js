@@ -1,9 +1,12 @@
 const express = require('express')
+require('dotenv').config();
 
 const users = require('./controllers/users');
 
+console.log(process.env.BEST_CLASS);
+
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000;
 
 app.get('/', (req, res, next) => {
   res.send('Hello World, you requested ' + req.url)

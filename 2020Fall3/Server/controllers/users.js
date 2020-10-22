@@ -20,4 +20,5 @@ router.get('/', async (req, res) => {
           req.query.age);
           res.send(newUser);
   })
+  
 module.exports = router;
