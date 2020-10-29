@@ -1,6 +1,7 @@
 
 
 
+const mysql = require('./mysql');
 
 const data = [{name: 'Moshe', age: 43},
 {name: 'Biden', age: 78}]
@@ -9,7 +10,7 @@ const data = [{name: 'Moshe', age: 43},
     //await Promise.resolve()
     //throw { status: 501, message: "This is a fake error"}
     console.log("Called Get All")
-    return data;
+    return mysql.query(`SELECT = FROM Users`);
 }
 function add(name,age){
     data.push({name,age});

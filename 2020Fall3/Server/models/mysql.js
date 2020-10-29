@@ -11,7 +11,18 @@ const pool = mysql.createPool({
     database: process.env.MYSQL_DATABASE
 })
 
+const query = (sql,binding) => {
+    return new Promise((resolve, reject) =>{
+        pool.query(sql,binding, (err,result,fields) =>{
+            if(err) reject(err);
+            resolve(result); 
+        });
+    });
+}; 
+module.exports = {pool, query};
+
+/*
 query("SELECT * FROM Users").then(rows=>{
     console.log(rows);
 })
-.catch(err=> console.error(err));
+.catch(err=> console.error(err));*/
