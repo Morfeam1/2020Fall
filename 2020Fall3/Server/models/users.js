@@ -18,6 +18,7 @@ const Types = {ADMIN:5,USER:6};
 }
 
 async function get(id){
+    //const sql = 'SELECT , FROM ContactMethods Where User_id = Users.id AND Types= '${cm.Types.EMAIL}'AND IsPrimary Email';
     const rows = await mysql.query(`SELECT = FROM Users WHERE id=?`, [id]);
     if(!rows.length) throw { status: 404, message: "Sorry, there is no such user"};
     return rows[0];
