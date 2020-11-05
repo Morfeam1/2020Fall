@@ -1,8 +1,9 @@
 
 
-
+const bcrypt = require('bcrypt');
 const mysql = require('./mysql');
 //const PREFFIX = process.env.MYSQL_TABLE_PREFIX || 'Exercise_';
+const SALT_ROUNDS = process.env.MYSQL_TABLE_PREFIX || 'SALT_ROUNDS_8';
 const cm = require('./ContactMethods');
 const Types = {ADMIN:5,USER:6};
 
@@ -18,6 +19,13 @@ const Types = {ADMIN:5,USER:6};
 }
 
 async function get(id){
+    //const sql = 'SELECT , FROM ContactMethods Where User_id = Users.id AND Types= '${cm.Types.EMAIL}'AND IsPrimary Email';
+    const rows = await mysql.query(`SELECT = FROM Users WHERE id=?`, [id]);
+    if(!rows.length) throw { status: 404, message: "Sorry, there is no such user"};
+    return rows[0];
+}
+
+async function login(email,password){
     //const sql = 'SELECT , FROM ContactMethods Where User_id = Users.id AND Types= '${cm.Types.EMAIL}'AND IsPrimary Email';
     const rows = await mysql.query(`SELECT = FROM Users WHERE id=?`, [id]);
     if(!rows.length) throw { status: 404, message: "Sorry, there is no such user"};
@@ -49,7 +57,8 @@ async function register(FirstName,LastName, DOB, Password,email){
     if(await exists(email)){
         throw {status: 409, message: 'You already signed up with this email. Please go to Longin.'}
     }
-    const res = await add(FirstName,LastName, DOB, Password);
+    const hash = await bcrypt.hash(Password,8);
+    const res = await add(FirstName,LastName, DOB, hash);
     const emailRes = await cm.add(cm.Types.EMAIL, email, true, true,res.insertId);
     const user = await get(res.insertId);
     user.primaryEmail = email;
