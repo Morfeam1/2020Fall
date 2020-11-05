@@ -2,6 +2,9 @@
 
 
 const mysql = require('./mysql');
+//const PREFFIX = process.env.MYSQL_TABLE_PREFIX || 'Exercise_';
+const Types = {ADMIN:5,USER:6};
+
 
 //const data = [{name: 'Moshe', age: 43},
 //{name: 'Biden', age: 78}]
@@ -31,7 +34,7 @@ async function add(FirstName,LastName, DOB, Password){
 
 async function update(id,FirstName,LastName, DOB, Password){
     const sql = 'UPDATE `Users` SET ?  WHERE `id` = ? ;';
-    const params = [[id,new Date(), FirstName, LastName, new Date(DOB), Password]];
+    const params = [[ FirstName, LastName, new Date(DOB), Password]];
     return await mysql.query(sql, [params]);
 }
 
@@ -42,5 +45,5 @@ async function remove(id){
 
 const search = async q => await mysql.query(`SELECT id, FirstName, LastName, FROM Users WHERE LastName LIKE ? OR FirstName LIKE ?; `, [`%${q}%`, `%${q}%`]);
 
-module.exports = {rand, getAll,get,add,getTypes,search,update,remove}
+module.exports = {rand, getAll,get,add,getTypes,search,update,remove,Types}
 
