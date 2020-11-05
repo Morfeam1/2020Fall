@@ -3,6 +3,7 @@
 
 const mysql = require('./mysql');
 //const PREFFIX = process.env.MYSQL_TABLE_PREFIX || 'Exercise_';
+const cm = require('./ContactMethods');
 const Types = {ADMIN:5,USER:6};
 
 
@@ -19,7 +20,7 @@ const Types = {ADMIN:5,USER:6};
 async function get(id){
     const rows = await mysql.query(`SELECT = FROM Users WHERE id=?`, [id]);
     if(!rows.length) throw { status: 404, message: "Sorry, there is no such user"};
-    return rows;
+    return rows[0];
 }
 
 async function getTypes(){
@@ -43,7 +44,18 @@ async function remove(id){
     return await mysql.query(sql,[id]);
 }
 
+async function register(FirstName,LastName, DOB, Password,email){
+    if(await exists(email)){
+        throw {status: 409, message: 'You already signed up with this email. Please go to Longin.'}
+    }
+    const res = await add(FirstName,LastName, DOB, Password);
+    const emailRes = await cm.add(cm.Types.EMAIL, email, true, true,res.insertId);
+    const user = await get(res.insertId);
+    user.primaryEmail = email;
+    return user; 
+}
+
 const search = async q => await mysql.query(`SELECT id, FirstName, LastName, FROM Users WHERE LastName LIKE ? OR FirstName LIKE ?; `, [`%${q}%`, `%${q}%`]);
 
-module.exports = {rand, getAll,get,add,getTypes,search,update,remove,Types}
+module.exports = {rand, getAll,get,add,getTypes,search,update,remove,Types,register}
 
