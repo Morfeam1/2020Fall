@@ -3,7 +3,7 @@
 const bcrypt = require('bcrypt');
 const mysql = require('./mysql');
 //const PREFFIX = process.env.MYSQL_TABLE_PREFIX || 'Exercise_';
-const SALT_ROUNDS = process.env.MYSQL_TABLE_PREFIX || 'SALT_ROUNDS_8';
+const SALT_ROUNDS = process.env.SALT_ROUNDS ||8;
 const cm = require('./ContactMethods');
 const Types = {ADMIN:5,USER:6};
 
@@ -26,10 +26,16 @@ async function get(id){
 }
 
 async function login(email,password){
-    //const sql = 'SELECT , FROM ContactMethods Where User_id = Users.id AND Types= '${cm.Types.EMAIL}'AND IsPrimary Email';
+    const sql = `SELECT * 
+    FROM ${PREFIX}Users U Join ${PREFIX}ContactMethods CM ON U.id=CM.User_id WHERE CM.Value=?`;
     const rows = await mysql.query(`SELECT = FROM Users WHERE id=?`, [id]);
     if(!rows.length) throw { status: 404, message: "Sorry, there is no such user"};
-    return rows[0];
+    console.log({password, Password: rows[0].Password});
+    
+    const res = await bcrypt.compare(password,rows[0].Password);
+    console.log({res});
+    if(!await bcrypt.compare(password,rows[0].Password)) throw {status: 403, message: "Sorry, Wrong Password."};
+    return get(rows[0].User_id);
 }
 
 async function getTypes(){
@@ -57,8 +63,8 @@ async function register(FirstName,LastName, DOB, Password,email){
     if(await exists(email)){
         throw {status: 409, message: 'You already signed up with this email. Please go to Longin.'}
     }
-    const hash = await bcrypt.hash(Password,8);
-    const res = await add(FirstName,LastName, DOB, hash);
+    const hash = await bcrypt.hash(Password,SALT_ROUNDS);
+    const res = await add(FirstName,LastName, Password, email);
     const emailRes = await cm.add(cm.Types.EMAIL, email, true, true,res.insertId);
     const user = await get(res.insertId);
     user.primaryEmail = email;
@@ -67,5 +73,5 @@ async function register(FirstName,LastName, DOB, Password,email){
 
 const search = async q => await mysql.query(`SELECT id, FirstName, LastName, FROM Users WHERE LastName LIKE ? OR FirstName LIKE ?; `, [`%${q}%`, `%${q}%`]);
 
-module.exports = {rand, getAll,get,add,getTypes,search,update,remove,Types,register}
+module.exports = {rand, getAll,get,add,getTypes,search,update,remove,Types,register,login}
 
